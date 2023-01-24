@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.filter()
 def decode_image(encoded_image):
-    return "data:image/png;base64, {}".format(encoded_image.decode("utf8"))
+    return "data:image/png;base64,%s" % encoded_image.decode("utf8")

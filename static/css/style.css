@@ -1,0 +1,48 @@
+body {
+    background-color: #ECF0F1; 
+    color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 6px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+a {
+    color: #246099;
+}
+
+div {
+  text-align: center
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+input, button {
+    margin: 12px 0;
+    border: 2px solid #246099;
+}
+
+input {
+    color: #4D4D4D;
+    padding: 14px;
+}
+
+button {
+    color: #FFF;
+    cursor: pointer;
+    background-color: #246099;
+    padding: 12px;
+    font-size: 16px;
+}
+
+small {
+    font-size: small;
+}

@@ -1,0 +1,37 @@
+{% load generator_tags %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Screenshot Generator Python</title>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Python Screenshot Generator</h1>
+        <form action="/" method="post">
+            {% csrf_token %}
+            <input type="url" name="url" size="50" value="{{ full_url }}" placeholder="Enter URL: https://www.netflix.com" required>
+            <button type="submit">Generate screenshot</button>
+        </form>
+        <small>Optional params <strong>w, h</strong> for screenshot size and <strong>save</strong> for saving the screenshot in your media dir. <br /> Ex: https://nodejs.org/?w=800&h=600&save=true</small>
+  
+        {% if screenshot %}
+            <h2>Screenshot for <a href="{{ base_url }}" target="_blank">{{ domain }}</a></h2>
+            {% if save %}
+                <img src="{% get_media_prefix %}{{screenshot}}">
+            {% else %}
+            <img src="{{ screenshot|decode_image }}">
+            {% endif %}
+        {% endif %}
+    </div>
+    
+    
+  </body>
+
+</html>

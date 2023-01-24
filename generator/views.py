@@ -14,6 +14,9 @@ import base64
 import os
 import urllib.parse
 
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+
+
 def get_screenshot(request):
     """Сделать снимок экрана и вернтуть файл png на основе url"""
 
@@ -32,9 +35,9 @@ def get_screenshot(request):
                     width = int(params['w'][0])
                 if 'h' in params: 
                     height = int(params['h'][0])
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-            driver.get(url)
-            driver.set_window_size(width, height)
+            my_driver = driver        
+            my_driver.get(url)
+            my_driver.set_window_size(width, height)
 
             if 'save' in params and params['save'][0] == 'true':
                 save = True
@@ -44,11 +47,11 @@ def get_screenshot(request):
                 full_img_path = os.path.join(img_dir, img_name)
                 if not os.path.exists(img_dir):
                     os.makedirs(img_dir)
-                driver.save_screenshot(full_img_path)
+                my_driver.save_screenshot(full_img_path)
                 screenshot = img_name
             else:
                 screenshot_img = driver.get_screenshot_as_png()
-                screenshot = base64.encode(screenshot_img)
+                screenshot = base64.encodebytes(screenshot_img)
 
             context = {
                 'screenshot': screenshot,
@@ -58,8 +61,15 @@ def get_screenshot(request):
                 'save': save,
             }
 
-            driver.quit()
+            my_driver.quit()
             return render(request, 'generator/index.html', context=context)
+    
+    else:
+        return render(request, 'generator/index.html')
+    
+    
+    
+    
 
 
 

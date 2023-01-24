@@ -14,3 +14,6 @@ exceptiongroup==1.1.0
 h11==0.14.0
 idna==3.4
 outcome==1.2.0      
+python-dotenv==0.21.1 
+tqdm==4.64.1 
+webdriver-manager==3.8.5

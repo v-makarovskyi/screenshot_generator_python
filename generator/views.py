@@ -28,13 +28,41 @@ def get_screenshot(request):
             domain = urllib.parse.urlsplit(url)[1]
             params = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
             if len(params) > 0:
-                if 'w' in params: width = int(params['w'][0])
-                if 'h' in params: height = int(params['h'][0])
+                if 'w' in params: 
+                    width = int(params['w'][0])
+                if 'h' in params: 
+                    height = int(params['h'][0])
             driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
             driver.get(url)
             driver.set_window_size(width, height)
 
-            
+            if 'save' in params and params['save'][0] == 'true':
+                save = True
+                now = str(datetime.today().timestamp())
+                img_dir = settings.MEDIA_ROOT
+                img_name = ''.join([now, '_image.png'])
+                full_img_path = os.path.join(img_dir, img_name)
+                if not os.path.exists(img_dir):
+                    os.makedirs(img_dir)
+                driver.save_screenshot(full_img_path)
+                screenshot = img_name
+            else:
+                screenshot_img = driver.get_screenshot_as_png()
+                screenshot = base64.encode(screenshot_img)
+
+            context = {
+                'screenshot': screenshot,
+                'domain': domain,
+                'base_url': base_url,
+                'full_url': url,
+                'save': save,
+            }
+
+            driver.quit()
+            return render(request, 'generator/index.html', context=context)
+
+
+
 
 
 

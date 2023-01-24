@@ -1,4 +1,4 @@
-### Screen Capture Generator
+### Screenshot Generator Python
 #### Developed at Python and using Selenium
 
 ---
